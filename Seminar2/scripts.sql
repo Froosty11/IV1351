@@ -20,11 +20,11 @@ GROUP BY TO_CHAR(date_and_time, 'MONTH');
 --SCRIPT 2
 --SHOW NUMBER OF LESSONS OF EACH TYPE PER MONTH
 SELECT 
-    TO_CHAR(date_and_time, 'MONTH') as "MONTH",
+    TO_CHAR(lesson.date_and_time, 'MONTH') as "MONTH",
     COUNT(single_p_lesson) as "S_LESSON",
     COUNT(ensemble) as "ENSEMBLE",
     COUNT(group_lesson) as "G_LESSON"
 FROM
     lesson, single_p_lesson, ensemble, group_lesson
-WHERE date_and_time between 'January 1, 2022' and 'December 31, 2022'
-GROUP BY TO_CHAR(date_and_time, 'MONTH');
+WHERE lesson.date_and_time between 'January 1, 2022' and 'December 31, 2022'
+GROUP BY TO_CHAR(lesson.date_and_time, 'MONTH');
