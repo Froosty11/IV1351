@@ -7,6 +7,7 @@
 --to which month each number belongs. However, it's most likely easier to understand the result if you do place all numbers for a 
 --particular month on the same row, and it's an interesting exercise, therefore you're encouraged to try.
 
+--SCRIPT 1
 -- SHOW NUMBER OF TOTAL LESSONS OF ALL TYPES PER MONTH
 SELECT 
     TO_CHAR(date_and_time, 'MONTH') as "Month",
@@ -16,13 +17,14 @@ FROM
 WHERE date_and_time between 'January 1, 2022' and 'December 31, 2022'
 GROUP BY TO_CHAR(date_and_time, 'MONTH');
 
+--SCRIPT 2
 --SHOW NUMBER OF LESSONS OF EACH TYPE PER MONTH
 SELECT 
     TO_CHAR(date_and_time, 'MONTH') as "MONTH",
-    COUNT(c.single_p_lesson) as "S_LESSON",
-    COUNT(c.ensemble) as "ENSEMBLE",
-    COUNT(c.group_lesson) as "G_LESSON"
+    COUNT(single_p_lesson) as "S_LESSON",
+    COUNT(ensemble) as "ENSEMBLE",
+    COUNT(group_lesson) as "G_LESSON"
 FROM
-    lesson c
+    lesson, single_p_lesson, ensemble, group_lesson
 WHERE date_and_time between 'January 1, 2022' and 'December 31, 2022'
 GROUP BY TO_CHAR(date_and_time, 'MONTH');
