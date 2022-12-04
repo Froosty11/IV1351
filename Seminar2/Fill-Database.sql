@@ -72,16 +72,16 @@ INSERT INTO single_p_lesson (instructorID, date_and_time, location, difficulty, 
 INSERT INTO single_p_lesson (instructorID, date_and_time, location, difficulty, instrument, type) VALUES(4,'December 9, 2022', 'Sal A','Beginner', 'Piano', 'single_p_lesson');
 INSERT INTO single_p_lesson (instructorID, date_and_time, location, difficulty, instrument, type) VALUES(1,'Feb 3, 2022', 'Aula','Intermediate', 'Guitarr', 'single_p_lesson');
 
-INSERT INTO ensemble (instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(12, 'May 9, 2022', 'Sal A', 12, 24, 'Classical', 'ensemble');
-INSERT INTO ensemble (instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(11, 'April 1, 1923', 'Musiksal #3', 2, 4, 'Jazz', 'ensemble');
-INSERT INTO ensemble (instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(8, 'January 19, 2021', 'Musiksal #2', 4, 8, 'Hiphop', 'ensemble');
-INSERT INTO ensemble (instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(5, 'April 22, 2022', 'Aula', 4, 16, 'Pop', 'ensemble');
-INSERT INTO ensemble (instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(5, 'March 17, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
-INSERT INTO ensemble (instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(5, 'July 17, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
-INSERT INTO ensemble (instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(5, 'August 17, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
-INSERT INTO ensemble (instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(5, 'December 17, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
-INSERT INTO ensemble (instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(4, 'December 24, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
-INSERT INTO ensemble (instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(3, 'December 10, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(11,12, 'May 9, 2022', 'Sal A', 12, 24, 'Classical', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(4,11, 'April 1, 1923', 'Musiksal #3', 2, 4, 'Jazz', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(4,8, 'January 19, 2021', 'Musiksal #2', 4, 8, 'Hiphop', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(3,5, 'April 22, 2022', 'Aula', 4, 16, 'Pop', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(3,5, 'March 17, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(3,5, 'July 17, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(1,5, 'August 17, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(2,5, 'December 5, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(1,4, 'December 9, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(2,3, 'December 10, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
 
 
 INSERT INTO group_lesson (date_and_time, location,instructorID,min_students,max_students,instrument,skill_level, type) VALUES('May 9, 2022','Aula',5, 4, 8, 'Piano', 'Beginner', 'group_lesson');

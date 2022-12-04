@@ -140,7 +140,8 @@ ALTER TABLE lesson ADD CONSTRAINT PK_lesson PRIMARY KEY (lesson_id);
 CREATE TABLE multilesson (
  lesson_id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
  min_students INT,
- max_students INT
+ max_students INT,
+ spots_left INT
 ) INHERITS(lesson);
 
 ALTER TABLE multilesson ADD CONSTRAINT PK_multilesson PRIMARY KEY (lesson_id);

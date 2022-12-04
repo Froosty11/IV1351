@@ -71,5 +71,15 @@ GROUP BY
     i.full_name
 ORDER BY 
     "LESSONS" DESC
+-- Assignment 4: 
+--List all ensembles held during the next week, sorted by music genre and weekday.
+-- For each ensemble tell whether it's full booked, has 1-2 seats left or has more seats left.
+-- Hint: you might want to use a CASE statement in your query to produce the desired output.
 
-
+SELECT
+    e.lesson_id,
+    e.spots_left
+FROM
+    ensemble e
+WHERE
+    e.date_and_time BETWEEN CURRENT_TIMESTAMP AND CURRENT_TIMESTAMP + INTERVAL '7 day'
