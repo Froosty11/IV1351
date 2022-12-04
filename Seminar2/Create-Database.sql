@@ -109,8 +109,8 @@ ALTER TABLE schedule ADD CONSTRAINT PK_schedule PRIMARY KEY (instructorID);
 
 
 CREATE TABLE sibling_info (
- sibling2 INT GENERATED ALWAYS AS IDENTITY NOT NULL,
- sibling1 INT GENERATED ALWAYS AS IDENTITY NOT NULL
+ sibling2 INT ,
+ sibling1 INT
 );
 
 ALTER TABLE sibling_info ADD CONSTRAINT PK_sibling_info PRIMARY KEY (sibling2,sibling1);

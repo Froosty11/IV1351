@@ -3,6 +3,7 @@ INSERT INTO person (first_name,full_name )VALUES('Kevin','Kevin Castaneda');
 INSERT INTO person (first_name,full_name )VALUES('Armando','Armando Bradford');
 INSERT INTO person (first_name,full_name )VALUES('Liberty','Liberty Meyer');
 INSERT INTO person (first_name,full_name )VALUES('Devin','Devin Roberson');
+INSERT INTO person (first_name,full_name )VALUES('Devin','Devin Roberson');
 
 INSERT INTO adress (zipcode,street,city,streetnumber) VALUES('52162','P.O. Box 353, 3020 Ac Avenue','Bhilai',6);
 INSERT INTO adress (zipcode,street,city,streetnumber) VALUES('15858','Ap #334-7316 Ullamcorper. St.','Otukpo',10);
@@ -21,6 +22,7 @@ INSERT INTO student (first_name,full_name,person_number) VALUES('Påger','Påger
 INSERT INTO student (first_name,full_name,person_number) VALUES('Gamer','Gamer Grandpa',201011111576);
 INSERT INTO student (first_name,full_name,person_number) VALUES('Yatzi','Yatzi Jansson',183702301234);
 INSERT INTO student (first_name,full_name,person_number) VALUES('Reger','Reger Dumbass',196009111343); 
+INSERT INTO student (first_name,full_name,person_number) VALUES('Greger','Greger Von Seger ',1951009343); 
 
 INSERT INTO lease (startTime,endTime) VALUES('Feb 9, 2022','Jan 4, 2023');
 INSERT INTO lease (startTime,endTime) VALUES('Aug 28, 2022','Jul 5, 2022');
@@ -87,3 +89,7 @@ INSERT INTO group_lesson (date_and_time, location,instructorID,min_students,max_
 INSERT INTO group_lesson (date_and_time, location,instructorID,min_students,max_students,instrument,skill_level, type) VALUES('October 30, 2022','SalB',3, 2, 6, 'Guitarr', 'Beginner', 'group_lesson');
 INSERT INTO group_lesson (date_and_time, location,instructorID,min_students,max_students,instrument,skill_level, type) VALUES('November 10, 2022','GR301',6, 4, 12, 'Violin', 'Intermediate', 'group_lesson');
 INSERT INTO group_lesson (date_and_time, location,instructorID,min_students,max_students,instrument,skill_level, type) VALUES('January 1, 2022','Aula',6, 4, 8, 'Piano', 'Beginner', 'group_lesson');
+
+INSERT INTO sibling_info(sibling1, sibling2) VALUES(1, 2);
+INSERT INTO sibling_info(sibling1, sibling2) VALUES(1, 3);
+INSERT INTO sibling_info(sibling1, sibling2) VALUES(5, 4);
