@@ -20,11 +20,32 @@ GROUP BY TO_CHAR(date_and_time, 'MONTH');
 --SCRIPT 2
 --SHOW NUMBER OF LESSONS OF EACH TYPE PER MONTH
 SELECT 
-    TO_CHAR(lesson.date_and_time, 'MONTH') as "MONTH",
-    COUNT(single_p_lesson) as "S_LESSON",
-    COUNT(ensemble) as "ENSEMBLE",
-    COUNT(group_lesson) as "G_LESSON"
+    TO_CHAR(c.date_and_time, 'MONTH') as "MONTH",
+    SUM(CASE WHEN c.type = 'single_p_lesson'  then 1 else 0 end) as "S_LESSON",
+    SUM(CASE WHEN c.type = 'ensemble' then 1 else 0 end) as "ENSEMBLE",
+    SUM(CASE WHEN c.type = 'group_lesson' then 1 else 0 end) as "G_LESSON"
 FROM
-    lesson, single_p_lesson, ensemble, group_lesson
-WHERE lesson.date_and_time between 'January 1, 2022' and 'December 31, 2022'
-GROUP BY TO_CHAR(lesson.date_and_time, 'MONTH');
+    lesson AS c, pg_class p
+WHERE 
+    c.date_and_time between 'January 1, 2022' and 'December 31, 2022' AND c.tableoid = p.oid
+GROUP BY 
+    TO_CHAR(c.date_and_time, 'MONTH');
+
+--######################################################################################
+--Assignment 3:
+--List all instructors who has given more than a specific number of lessons during the current month. 
+--Sum all lessons, independent of type, and sort the result by the number of given lessons.
+--This query will be used to find instructors risking to work too much, and will be executed daily.
+SELECT 
+    full_name AS "NAME",
+    SUM(CASE WHEN l.instructorID = i.id then 1 else 0 end) AS "LESSONS"
+FROM 
+    instructor AS i, lesson AS l
+WHERE
+    l.date_and_time BETWEEN 'December 1, 2022' AND  'December 31, 2022'
+GROUP BY 
+    i.full_name
+ORDER BY 
+    "LESSONS" DESC
+
+

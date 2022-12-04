@@ -130,7 +130,8 @@ CREATE TABLE lesson (
  lesson_id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
  date_and_time  TIMESTAMP(4) NOT NULL,
  location VARCHAR(30),
- instructorID INT NOT NULL
+ instructorID INT NOT NULL,
+ type VARCHAR(20)
 );
 
 ALTER TABLE lesson ADD CONSTRAINT PK_lesson PRIMARY KEY (lesson_id);
