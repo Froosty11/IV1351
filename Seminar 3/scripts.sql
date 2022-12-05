@@ -77,9 +77,13 @@ ORDER BY
 -- Hint: you might want to use a CASE statement in your query to produce the desired output.
 
 SELECT
-    e.lesson_id,
-    e.spots_left
+    e.spots_left AS "SPOTS LEFT",
+    e.genre AS "GENRE"
 FROM
     ensemble e
 WHERE
     e.date_and_time BETWEEN CURRENT_TIMESTAMP AND CURRENT_TIMESTAMP + INTERVAL '7 day'
+ORDER BY
+    "GENRE" DESC,
+    "SPOTS LEFT" DESC
+

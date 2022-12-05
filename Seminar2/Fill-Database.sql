@@ -79,7 +79,8 @@ INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_stu
 INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(3,5, 'March 17, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
 INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(3,5, 'July 17, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
 INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(1,5, 'August 17, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
-INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(2,5, 'December 5, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(2,5, 'December 8, 2022', 'Aula', 2, 4,'Classical', 'ensemble');
+INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(4,5, 'December 8, 2022', 'Aula', 2, 4,'Pop', 'ensemble');
 INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(1,4, 'December 9, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
 INSERT INTO ensemble (spots_left, instructorID, date_and_time, location, min_students,max_students,genre, type) VALUES(2,3, 'December 10, 2022', 'Aula', 2, 4,'Electrical', 'ensemble');
 
