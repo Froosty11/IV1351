@@ -64,6 +64,9 @@ public class SoundgoodDao {
     "FROM " +
         INSTRUMENT_TABLE + " item " + 
     "WHERE "  + "item." + INS_LEASE_COLUMN+" is null AND item.instrumentType = ?");
+    
+        INSERT INTO lease (startTime,endTime) VALUES(CURRENT_TIMESTAMP + interval '1 year');
+        rentedInstruments = connection.prepareStatement("INSERT INTO" intstrumentItem(lease_id) VALUES()     ); 
 
 
 
