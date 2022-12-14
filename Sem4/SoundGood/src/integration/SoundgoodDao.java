@@ -13,10 +13,15 @@ public class SoundgoodDao {
      */
     Connection connection;
     private PreparedStatement findInstrumentStmt;
+    private PreparedStatement rentAnInstrument;
     private static final String INS_PRICE_COLUMN = "price";
     private static final String INS_BRAND_COLUMN = "brand";
     private static final String INS_LEASE_COLUMN = "lease_id";
     private static final String INSTRUMENT_TABLE = "intstrumentItem";
+
+    private static final String LEASE_TABLE = "lease";
+    private static final String LES_STUDENT_COLUMN = "id";
+
 
 
 
@@ -57,6 +62,14 @@ public class SoundgoodDao {
         }
         return instrumentInfos;
     }
+
+    public int rentAnInstrument(int studentID, String serialNumber){
+        try{
+            rentAnInstrument.setString(1, studentID);
+
+    
+    }
+
     private void prepStatements() throws SQLException{
         findInstrumentStmt = connection.prepareStatement("SELECT " +
         "item."+ INS_BRAND_COLUMN+ " as \"BRAND\", " + 
@@ -65,9 +78,12 @@ public class SoundgoodDao {
         INSTRUMENT_TABLE + " item " + 
     "WHERE "  + "item." + INS_LEASE_COLUMN+" is null AND item.instrumentType = ?");
     
-        INSERT INTO lease (startTime,endTime) VALUES(CURRENT_TIMESTAMP + interval '1 year');
-        rentedInstruments = connection.prepareStatement("INSERT INTO" intstrumentItem(lease_id) VALUES()     ); 
 
+
+        rentAnInstrument = connection.prepareStatement(
+        "INSERT INTO " + LEASE_TABLE + "(startTime,endTime) VALUES(CURRENT_TIMESTAMP , interval '1 year');" +
+        "INSERT INTO" + INSTRUMENT_TABLE +"(" + INS_LEASE_COLUMN +")" + "VALUES(SELECT " + LEASE_TABLE + "." + LES_STUDENT_COLUMN + "FROM" +  LEASE_TABLE +  "WHERE" + LEASE_TABLE + "." + LES_STUDENT_COLUMN + "= ?)"
+        );
 
 
     }
