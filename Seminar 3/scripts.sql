@@ -87,3 +87,15 @@ ORDER BY
     "GENRE" DESC,
     "SPOTS LEFT" DESC
 
+
+
+
+
+--seminar 4
+SELECT
+    item.brand as "BRAND",
+    item.price as "FEE"
+FROM
+    intstrumentItem item
+WHERE
+    ((item.lease_id is null) AND item.instrumentType = ?) 

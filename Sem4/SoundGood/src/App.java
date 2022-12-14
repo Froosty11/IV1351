@@ -1,14 +1,16 @@
-import java.sql.*;
+
+import integration.SoundgoodDao;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
+        SoundgoodDao sDB = new SoundgoodDao();
+        List<String> s = sDB.findAllAvalInstruments("Guitar");
+        for (String string : s) {
+            System.out.println(string);
+        }
+
     }
-    private void connectToBankDB() throws ClassNotFoundException, SQLException {
-        connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bankdb",
-                                                 "postgres", "postgres");
-        // connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb",
-        //                                          "mysql", "mysql");
-        connection.setAutoCommit(false);
-    }
+
 }

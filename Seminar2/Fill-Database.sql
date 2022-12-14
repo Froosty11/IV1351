@@ -30,11 +30,15 @@ INSERT INTO lease (startTime,endTime) VALUES('Oct 8, 2022','Aug 23, 2022');
 INSERT INTO lease (startTime,endTime) VALUES('Dec 4, 2022','Oct 10, 2023');
 INSERT INTO lease (startTime,endTime) VALUES('Jun 24, 2022','Jan 19, 2023');
 
-INSERT INTO intstrumentitem (price,description, serial_number) VALUES(32113,'Piano from 1892, slightly discoloured','ABC');
-INSERT INTO intstrumentitem (price,description, serial_number) VALUES(5737,'Violin 3/4 size age range 10-12','BCD');
-INSERT INTO intstrumentitem (price,description, serial_number) VALUES(29433,'Guitarr teenage to adult size','DAH');
-INSERT INTO intstrumentitem (price,description, serial_number) VALUES(31501,'Saxaphone golden vintage 1432','SAD');
-INSERT INTO intstrumentitem (price,description, serial_number) VALUES(41942,'Electric guitarr, newly bought','DSA');
+INSERT INTO intstrumentitem (instrumentType, brand,price,description, serial_number) VALUES('Piano','Musically',32113,'Piano from 1892, slightly discoloured','ABC');
+INSERT INTO intstrumentitem (instrumentType, brand,price,description, serial_number) VALUES('Violin','Trombone Factory',5737,'Violin 3/4 size age range 10-12','BCD');
+INSERT INTO intstrumentitem (instrumentType, brand,price,description, serial_number) VALUES('Guitar','ITK Instruments',29433,'Guitarr teenage to adult size','DAH');
+INSERT INTO intstrumentitem (instrumentType, brand,price,description, serial_number) VALUES('Saxaphone','Sexyphones',31501,'Saxaphone golden vintage 1432','SAD');
+INSERT INTO intstrumentitem (instrumentType, brand,price,description, serial_number) VALUES('Guitar','RockHard',41942,'Electric guitarr, newly bought','DSA');
+
+INSERT INTO intstrumentitem (lease_id, instrumentType, brand,price,description, serial_number) VALUES(3, 'Trombone','Trombone Factory',9190,'Beginner friendly trombone','411SD');
+INSERT INTO intstrumentitem (lease_id, instrumentType, brand,price,description, serial_number) VALUES(2, 'Violin','Stringed',3450,'Violin for kids 7-10','341SDFA');
+INSERT INTO intstrumentitem (lease_id, instrumentType, brand,price,description, serial_number) VALUES(1, 'Guitar','ITK Instruments',29433,'Guitarr teenage to adult size','987AB');
 
 INSERT INTO staff_member (first_name,full_name,person_number ,identification_card) VALUES('Big','Big Ben',198412123454,3245);
 INSERT INTO staff_member (first_name,full_name,person_number ,identification_card) VALUES('Hannah','Hannah Asadi',199003034,3456);

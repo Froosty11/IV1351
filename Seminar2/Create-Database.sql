@@ -81,6 +81,7 @@ CREATE TABLE instrument (
  instrumentName VARCHAR(20),
  skill_level diff_lvls,
  ensemble BOOLEAN
+
 );
 
 ALTER TABLE instrument ADD CONSTRAINT PK_instrument PRIMARY KEY (id);
@@ -120,7 +121,9 @@ CREATE TABLE intstrumentItem (
  serial_number VARCHAR(10) UNIQUE NOT NULL,
  price INT,
  description TEXT,
- lease_id INT GENERATED ALWAYS AS IDENTITY
+ lease_id INT,
+brand VARCHAR(30),
+ instrumentType VARCHAR(20)
 );
 
 ALTER TABLE intstrumentItem ADD CONSTRAINT PK_intstrumentItem PRIMARY KEY (serial_number);
@@ -200,7 +203,6 @@ ALTER TABLE sibling_info ADD CONSTRAINT FK_sibling_info_0 FOREIGN KEY (sibling2)
 ALTER TABLE sibling_info ADD CONSTRAINT FK_sibling_info_1 FOREIGN KEY (sibling1) REFERENCES student (id);
 
 
-ALTER TABLE intstrumentItem ADD CONSTRAINT FK_intstrumentItem_0 FOREIGN KEY (lease_id) REFERENCES lease (lease_id);
 ALTER TABLE lesson ADD CONSTRAINT FK_lesson_0 FOREIGN KEY (instructorID) REFERENCES instructor (id);
 ALTER TABLE lesson ADD CONSTRAINT FK_lesson_1 FOREIGN KEY (instructorID) REFERENCES schedule (instructorID);
 ALTER TABLE lesson ADD CONSTRAINT FK_lesson_2 FOREIGN KEY (instructorID) REFERENCES student (id);
