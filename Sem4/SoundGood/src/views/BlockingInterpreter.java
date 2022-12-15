@@ -45,7 +45,6 @@ public class BlockingInterpreter {
                 switch (cmdLine.getCmd()) {
                     case INSTRUMENTLIST:
                     //list all instruments
-                    System.out.println(cmdLine.getParameter(0));
                     List<String> s = ctrl.ListAllInstruments(cmdLine.getParameter(0));
                     for (String string : s) {
                         System.out.println(string);
@@ -74,7 +73,7 @@ public class BlockingInterpreter {
                         break;
                     
                     default:
-                        System.out.println("illegal command");
+                        System.out.println("Illegal command. \"help\" to see avaliable commands.");
                 }
             } catch (Exception e) {
                 System.out.println("Operation failed");

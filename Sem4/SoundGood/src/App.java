@@ -1,6 +1,4 @@
 
-import integration.SoundgoodDao;
-import java.util.List;
 import views.BlockingInterpreter;
 import controller.*;
 import integration.DatabaseException;

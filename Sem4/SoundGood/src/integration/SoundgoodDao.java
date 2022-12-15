@@ -1,10 +1,8 @@
 package integration;
-import java.lang.instrument.Instrumentation;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.transform.Result;
 
 public class SoundgoodDao {
 
@@ -47,11 +45,10 @@ public class SoundgoodDao {
         
     }
     public void terminateLease(int lease_id) throws DatabaseException{
-        int r = -1;
         try{
             terminateLeaseStmt.setInt(1, lease_id);
             terminateLeaseStmt.setInt(2, lease_id);
-            r = terminateLeaseStmt.executeUpdate();
+            terminateLeaseStmt.executeUpdate();
             connection.commit();
         }
         catch(SQLException e){
@@ -133,13 +130,6 @@ public class SoundgoodDao {
             handleException("Couldn't list all avaliable instruments. ", e);
         }
         return instrumentInfos;
-    }
-
-    public int rentAnInstrument(int studentID, String serialNumber){
-        try{
-            rentAnInstrument.setString(1, studentID);
-
-    
     }
 
     private void prepStatements() throws SQLException{
