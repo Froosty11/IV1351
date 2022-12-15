@@ -134,6 +134,14 @@ public class SoundgoodDao {
         }
         return instrumentInfos;
     }
+
+    public int rentAnInstrument(int studentID, String serialNumber){
+        try{
+            rentAnInstrument.setString(1, studentID);
+
+    
+    }
+
     private void prepStatements() throws SQLException{
         findInstrumentStmt = connection.prepareStatement("SELECT " +
         "item."+ INS_SRL_COLUMN+ " as \"SERIAL\", " + 
