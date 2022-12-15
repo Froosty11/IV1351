@@ -1,15 +1,19 @@
 
 import integration.SoundgoodDao;
 import java.util.List;
+import views.BlockingInterpreter;
+import controller.*;
+import integration.DatabaseException;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
-        SoundgoodDao sDB = new SoundgoodDao();
-        List<String> s = sDB.findAllAvalInstruments("Guitar");
-        for (String string : s) {
-            System.out.println(string);
-        }
+        try {
+            new BlockingInterpreter(new Controller()).handleCmds();
+            } catch(DatabaseException bdbe) {
+                System.out.println("Could not connect to Bank db.");
+                bdbe.printStackTrace();
+            }
+
 
     }
 

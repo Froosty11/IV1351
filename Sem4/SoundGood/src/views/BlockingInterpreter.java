@@ -45,12 +45,23 @@ public class BlockingInterpreter {
                 switch (cmdLine.getCmd()) {
                     case INSTRUMENTLIST:
                     //list all instruments
-                        
+                    System.out.println(cmdLine.getParameter(0));
+                    List<String> s = ctrl.ListAllInstruments(cmdLine.getParameter(0));
+                    for (String string : s) {
+                        System.out.println(string);
+                    }
                     break;
-                    case TERMINATE: 
+                    case TERMINATE:
+                    try{
+                    ctrl.terminateLease(Integer.valueOf(cmdLine.getParameter(0)));
+                    }
+                    catch(NumberFormatException er){
+                        System.out.println("Number format is wrong, make sure to write an integer. ");
+                    }
                     //terminate
                     break;
                     case RENT: 
+                    ctrl.startNewLease(Integer.valueOf(cmdLine.getParameter(1)), cmdLine.getParameter(0));
                     //RENT
                     break;
                     case HELP:

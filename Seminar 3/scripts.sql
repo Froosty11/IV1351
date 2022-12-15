@@ -99,3 +99,31 @@ FROM
     intstrumentItem item
 WHERE
     ((item.lease_id is null) AND item.instrumentType = ?) 
+
+
+--sem 4.2
+INSERT INTO lease (startTime,endTime) 
+    VALUES(CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP() + INTERVAL('1 year'));
+INSERT INTO intstrumentItem(?, 
+    SELECT lease.id
+        FROM lease
+        WHERE ? = lease.id)
+
+    INSERT INTO lease (startTime,endTime,id) 
+        VALUES(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + INTERVAL'1 year', 6);
+        UPDATE intstrumentItem 
+    SET lease_id = lease.id
+    FROM lease
+    WHERE lease.id = 6 AND serial_number = 'DAH' AND intstrumentItem.lease_id is null
+
+-- sem 4.2 count amount of leases for a student
+    select count(CASE WHEN 3 = lease.id THEN 1 END) from lease
+
+--sem 4.3 disconnect a student and instrument from lease. 
+INSERT INTO intstrumentItem(lease_id) VALUES(null) FROM lease WHERE lease_id = ?;
+INSERT INTO lease(endTime, terminated, id) VALUES(CURRENT_TIMESTAMP, true, null) FROM lease WHERE lease_id = ?;
+
+UPDATE intstrumentItem SET lease_id = null WHERE lease_id = ?;
+UPDATE lease SET id = null, terminated = true FROM lease WHERE lease_id = ?;
+
+

@@ -1,7 +1,10 @@
 package integration;
+import java.lang.instrument.Instrumentation;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.transform.Result;
 
 public class SoundgoodDao {
 
@@ -13,10 +16,20 @@ public class SoundgoodDao {
      */
     Connection connection;
     private PreparedStatement findInstrumentStmt;
+    private PreparedStatement rentAnInstrumentStmt;
+    private PreparedStatement howManyLeasesStmt;
+    private PreparedStatement rentableInstrumentStmt;
+    private PreparedStatement terminateLeaseStmt;
     private static final String INS_PRICE_COLUMN = "price";
     private static final String INS_BRAND_COLUMN = "brand";
+    private static final String INS_SRL_COLUMN = "serial_number";
     private static final String INS_LEASE_COLUMN = "lease_id";
     private static final String INSTRUMENT_TABLE = "intstrumentItem";
+
+    private static final String LEASE_TABLE = "lease";
+    private static final String LES_STUDENTID_COLUMN = "id";
+    private static final String LES_LEASE_ID_COLUMN = "lease_id";
+
 
 
 
@@ -24,19 +37,81 @@ public class SoundgoodDao {
     /**
      * 
      */
-    public SoundgoodDao() throws ClassNotFoundException, SQLException{
-        connectToDB();
-        prepStatements();
+    public SoundgoodDao() throws DatabaseException{
+        try {
+            connectToDB();
+            prepStatements();
+        } catch (ClassNotFoundException | SQLException exception) {
+            throw new DatabaseException("Database connection failed. ", exception);
+        }
         
+    }
+    public void terminateLease(int lease_id) throws DatabaseException{
+        int r = -1;
+        try{
+            terminateLeaseStmt.setInt(1, lease_id);
+            terminateLeaseStmt.setInt(2, lease_id);
+            r = terminateLeaseStmt.executeUpdate();
+            connection.commit();
+        }
+        catch(SQLException e){
+            throw new DatabaseException("Database connection failed. ", e);
+        }
     }
     private void connectToDB() throws ClassNotFoundException, SQLException {
         connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/soundgood",
                                                  "postgres", "Edde02qq");
         connection.setAutoCommit(false);
-        System.out.println("Connection established");
 
     }
-    public List<String> findAllAvalInstruments(String instrumentType){
+    private int howManyLeases(int studentID) throws DatabaseException{
+        ResultSet r = null;
+        try{
+            howManyLeasesStmt.setInt(1, studentID);
+            r = howManyLeasesStmt.executeQuery();
+            r.next();
+            return (r.getInt(1));
+
+        }
+        catch(SQLException e){
+            throw new DatabaseException("Database connection failed. ", e);
+        }
+    }
+    private boolean isInstrumentLeasable(String serial) throws SQLException{
+        ResultSet r = null;
+        rentableInstrumentStmt.setString(1, serial);
+        r = rentableInstrumentStmt.executeQuery();
+        connection.commit();
+        if(r.next()) return true;
+        return false;
+    }
+    
+    public void rentInstrument(int studentID, String serialNumber) throws DatabaseException{
+        try{
+            if(isInstrumentLeasable(serialNumber)){
+            int i = howManyLeases(studentID);
+            if(i < 2 && i >= 0){
+                rentAnInstrumentStmt.setInt(1, studentID);
+                rentAnInstrumentStmt.setInt(2, studentID);
+                rentAnInstrumentStmt.setString(3, serialNumber);
+                rentAnInstrumentStmt.executeUpdate();
+                connection.commit();
+            }
+            else if(i == -1){
+                throw new DatabaseException("Something went very wrong... Database connection failed. ");
+            } 
+            else{
+
+                throw new DatabaseException("This student already has a maximum amount of leases. ");
+            }
+        }
+        else throw new DatabaseException("Instrument requested is already taken. Please choose another.");
+        }
+        catch(SQLException e){
+            throw new DatabaseException("Database exception. ");
+        }
+    }
+    public List<String> findAllAvalInstruments(String instrumentType) throws DatabaseException{
         List<String> instrumentInfos = new ArrayList<>();
         ResultSet queryReturn = null;
         try{
@@ -47,55 +122,68 @@ public class SoundgoodDao {
                 str.append(queryReturn.getString(1));
                 str.append(" - ");
                 str.append(queryReturn.getString(2));
+                str.append(" - ");
+                str.append(queryReturn.getString(3));
                 str.append("kr");
                 instrumentInfos.add(new String(str));
             }
             connection.commit();
         }
         catch(SQLException e){
-            e.printStackTrace();
+            handleException("Couldn't list all avaliable instruments. ", e);
         }
         return instrumentInfos;
     }
     private void prepStatements() throws SQLException{
         findInstrumentStmt = connection.prepareStatement("SELECT " +
+        "item."+ INS_SRL_COLUMN+ " as \"SERIAL\", " + 
         "item."+ INS_BRAND_COLUMN+ " as \"BRAND\", " + 
         "item."+ INS_PRICE_COLUMN +" as \"FEE\" " + 
     "FROM " +
         INSTRUMENT_TABLE + " item " + 
     "WHERE "  + "item." + INS_LEASE_COLUMN+" is null AND item.instrumentType = ?");
     
-        INSERT INTO lease (startTime,endTime) VALUES(CURRENT_TIMESTAMP + interval '1 year');
-        rentedInstruments = connection.prepareStatement("INSERT INTO" intstrumentItem(lease_id) VALUES()     ); 
+    ///////////////////////
+    rentAnInstrumentStmt = connection.prepareStatement(
+    "INSERT INTO lease (startTime,endTime,id)" +
+    " VALUES(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + INTERVAL'1 year', ?);" +
+    " UPDATE " + INSTRUMENT_TABLE +
+    " SET " + INS_LEASE_COLUMN+ " = " + LEASE_TABLE + "." + LES_LEASE_ID_COLUMN + 
+    " FROM " + LEASE_TABLE +
+    " WHERE " + LEASE_TABLE + "." + LES_STUDENTID_COLUMN + "= ? AND " +  INS_SRL_COLUMN + "= ? AND " + INSTRUMENT_TABLE+"." +INS_LEASE_COLUMN + " is null");
 
+    howManyLeasesStmt = connection.prepareStatement("select count(CASE WHEN ? = " + LEASE_TABLE + "." + LES_STUDENTID_COLUMN + " THEN 1 END) from " + LEASE_TABLE);
 
-
-    }
+    rentableInstrumentStmt = connection.prepareStatement("SELECT * FROM intstrumentItem WHERE serial_number = ? AND lease_id is null");
     
-    /* 
 
-    ("SELECT h." + HOLDER_COLUMN_NAME
-            + ", a." + ACCT_NO_COLUMN_NAME + ", a." + BALANCE_COLUMN_NAME + " FROM "
-            + HOLDER_TABLE_NAME + " h INNER JOIN " + ACCT_TABLE_NAME + " a ON a."
-            + HOLDER_FK_COLUMN_NAME + " = h." + HOLDER_PK_COLUMN_NAME);
+    ///////////////////
+    // sem 4.3 script goes here
 
+    terminateLeaseStmt = connection.prepareStatement(
+        "UPDATE " + INSTRUMENT_TABLE + " SET " + INS_LEASE_COLUMN + " = null WHERE " + INS_LEASE_COLUMN+" = ?;" +
+        "UPDATE " + LEASE_TABLE + " SET " + LES_STUDENTID_COLUMN + " = null, terminated = true, endTime = CURRENT_TIMESTAMP WHERE " + LEASE_TABLE + ".lease_id = ?;");
+}
 
-    public List<Instrument> findRentableInstrumentsOfType(String type) throws SQLException {
-        String failMsg = "Could not fetch instruments";
-        List<Instrument> instruments = new ArrayList<>();
-        ResultSet result = null;
-        try {
-
-            listAvailableStmt.setString(1, type);
-            result = listAvailableStmt.executeQuery();
-            while (result.next()) {
-                instruments.add(new Instrument(result.getString(1), result.getString(2), result.getFloat(3)));
-            }
-            connection.commit();
-        } catch (Exception e) {
-            // TODO: handle exception
-            System.out.println(failMsg);
-        }
-        return instruments;
-    }*/
+/**Taken with minor edits from github leifll
+ * 
+ * @param failureMsg
+ * @param cause
+ * @throws DatabaseException
+ * 
+ */
+private void handleException(String failureMsg, Exception cause) throws DatabaseException {
+    String completeFailureMsg = failureMsg;
+    try {
+        connection.rollback();
+    } catch (SQLException rollbackExc) {
+        completeFailureMsg = completeFailureMsg + 
+        ". Also failed to rollback transaction because of: " + rollbackExc.getMessage();
+    }
+    if (cause != null) {
+        throw new DatabaseException(failureMsg, cause);
+    } else {
+        throw new DatabaseException(failureMsg);
+    }
+    }
 }
