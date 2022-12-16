@@ -28,14 +28,14 @@ public class Controller {
     }
     public void terminateLease(int leaseID){
         try{
-            sgDB.terminateLease(leaseID);
+            sgDB.updateTerminateLease(leaseID);
         }
         catch(DatabaseException er){
             System.out.println(er.getMessage());
         }    }
     public void startNewLease(int studentID, String serial){
         try{
-            sgDB.rentInstrument(studentID, serial);
+            sgDB.updateRentInstrument(studentID, serial);
         }
         catch(DatabaseException er){
             System.out.println(er.getMessage());

@@ -44,7 +44,7 @@ public class SoundgoodDao {
         }
         
     }
-    public void terminateLease(int lease_id) throws DatabaseException{
+    public void updateTerminateLease(int lease_id) throws DatabaseException{
         try{
             terminateLeaseStmt.setInt(1, lease_id);
             terminateLeaseStmt.setInt(2, lease_id);
@@ -61,7 +61,7 @@ public class SoundgoodDao {
         connection.setAutoCommit(false);
 
     }
-    private int howManyLeases(int studentID) throws DatabaseException{
+    public int findHowManyLeases(int studentID) throws DatabaseException{
         ResultSet r = null;
         try{
             howManyLeasesStmt.setInt(1, studentID);
@@ -74,19 +74,18 @@ public class SoundgoodDao {
             throw new DatabaseException("Database connection failed. ", e);
         }
     }
-    private boolean isInstrumentLeasable(String serial) throws SQLException{
+    public boolean findIfAnInstrumentLeasable(String serial) throws SQLException{
         ResultSet r = null;
         rentableInstrumentStmt.setString(1, serial);
         r = rentableInstrumentStmt.executeQuery();
-        connection.commit();
         if(r.next()) return true;
         return false;
     }
     
-    public void rentInstrument(int studentID, String serialNumber) throws DatabaseException{
+    public void updateRentInstrument(int studentID, String serialNumber) throws DatabaseException{
         try{
-            if(isInstrumentLeasable(serialNumber)){
-            int i = howManyLeases(studentID);
+            if(findIfAnInstrumentLeasable(serialNumber)){
+            int i = findHowManyLeases(studentID);
             if(i < 2 && i >= 0){
                 rentAnInstrumentStmt.setInt(1, studentID);
                 rentAnInstrumentStmt.setInt(2, studentID);
