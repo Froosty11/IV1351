@@ -1,0 +1,154 @@
+postgres=# drop database soundgood
+postgres-# ;
+DROP DATABASE
+postgres=# create database soundgood;
+CREATE DATABASE
+postgres=# \c soundgood
+Du är nu uppkopplad mot databasen "soundgood" som användare "postgres".
+soundgood=# \i 'C:/Users/edvin/Documents/Data course/Seminar2/Create-Database.sql'
+CREATE TYPE
+CREATE TABLE
+psql:C:/Users/edvin/Documents/Data course/Seminar2/Create-Database.sql:13: NOTIS:  slår samman kolumn "id" med ärvd definition
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+psql:C:/Users/edvin/Documents/Data course/Seminar2/Create-Database.sql:23: NOTIS:  slår samman kolumn "id" med ärvd definition
+CREATE TABLE
+ALTER TABLE
+psql:C:/Users/edvin/Documents/Data course/Seminar2/Create-Database.sql:31: NOTIS:  slår samman kolumn "id" med ärvd definition
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+psql:C:/Users/edvin/Documents/Data course/Seminar2/Create-Database.sql:74: NOTIS:  slår samman kolumn "id" med ärvd definition
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+psql:C:/Users/edvin/Documents/Data course/Seminar2/Create-Database.sql:149: NOTIS:  slår samman kolumn "lesson_id" med ärvd definition
+CREATE TABLE
+ALTER TABLE
+psql:C:/Users/edvin/Documents/Data course/Seminar2/Create-Database.sql:158: NOTIS:  slår samman kolumn "lesson_id" med ärvd definition
+CREATE TABLE
+ALTER TABLE
+psql:C:/Users/edvin/Documents/Data course/Seminar2/Create-Database.sql:166: NOTIS:  slår samman kolumn "lesson_id" med ärvd definition
+CREATE TABLE
+ALTER TABLE
+psql:C:/Users/edvin/Documents/Data course/Seminar2/Create-Database.sql:175: NOTIS:  slår samman kolumn "lesson_id" med ärvd definition
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+soundgood=#  \i 'C:/Users/edvin/Documents/Data course/Seminar2/Fill-Database.sql'
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+soundgood=#

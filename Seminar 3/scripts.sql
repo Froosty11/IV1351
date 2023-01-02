@@ -102,8 +102,17 @@ WHERE
 
 
 --sem 4.2
-INSERT INTO lease (startTime,endTime) 
-    VALUES(CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP() + INTERVAL('1 year'));
+SELECT * FROM lease WHERE lease_id = 3 FOR UPDATE;
+UPDATE lease 
+SET 
+    startTime = CURRENT_TIMESTAMP, 
+    endTime = CURRENT_TIMESTAMP + INTERVAL '1 year'
+WHERE lease_id = 3;
+
+select * from intstrumentItem where lease_id = 3
+update lease
+
+
 INSERT INTO intstrumentItem(?, 
     SELECT lease.id
         FROM lease

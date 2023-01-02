@@ -81,7 +81,9 @@ public class SoundgoodDao {
         if(r.next()) return true;
         return false;
     }
-    
+    void print( int s){
+        System.out.println(s);
+    }
     public void updateRentInstrument(int studentID, String serialNumber) throws DatabaseException{
         try{
             if(findIfAnInstrumentLeasable(serialNumber)){
@@ -90,7 +92,7 @@ public class SoundgoodDao {
                 rentAnInstrumentStmt.setInt(1, studentID);
                 rentAnInstrumentStmt.setInt(2, studentID);
                 rentAnInstrumentStmt.setString(3, serialNumber);
-                rentAnInstrumentStmt.executeUpdate();
+                rentAnInstrumentStmt.execute();
                 connection.commit();
             }
             else if(i == -1){
@@ -101,10 +103,10 @@ public class SoundgoodDao {
                 throw new DatabaseException("This student already has a maximum amount of leases. ");
             }
         }
-        else throw new DatabaseException("Instrument requested is already taken. Please choose another.");
+        else throw new DatabaseException("Instrument requested is already taken, or doesn't exist. Please choose another.");
         }
         catch(SQLException e){
-            throw new DatabaseException("Database exception. ");
+            throw new DatabaseException("Database exception. " + e.getMessage());
         }
     }
     public List<String> findAllAvalInstruments(String instrumentType) throws DatabaseException{
@@ -142,8 +144,10 @@ public class SoundgoodDao {
     
     ///////////////////////
     rentAnInstrumentStmt = connection.prepareStatement(
+    "SELECT * FROM lease FOR UPDATE;" + 
     "INSERT INTO lease (startTime,endTime,id)" +
     " VALUES(CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + INTERVAL'1 year', ?);" +
+    "SELECT * FROM " + INSTRUMENT_TABLE + " FOR UPDATE; " +
     " UPDATE " + INSTRUMENT_TABLE +
     " SET " + INS_LEASE_COLUMN+ " = " + LEASE_TABLE + "." + LES_LEASE_ID_COLUMN + 
     " FROM " + LEASE_TABLE +

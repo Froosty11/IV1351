@@ -1,0 +1,11 @@
+uid
+ ->uid/deck
+    ->uid/deck/decklist
+        ->uid/deck/decklist
+            ->Card1
+                ->ScryfallID
+            ->Card2
+            ->Card3
+    ->uid/deck/deckName
+    ->uid/deck/deckScription
+    ->uid/deck/
