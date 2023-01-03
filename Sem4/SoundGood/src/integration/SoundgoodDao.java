@@ -48,11 +48,11 @@ public class SoundgoodDao {
         try{
             terminateLeaseStmt.setInt(1, lease_id);
             terminateLeaseStmt.setInt(2, lease_id);
-            terminateLeaseStmt.executeUpdate();
+            terminateLeaseStmt.execute();
             connection.commit();
         }
         catch(SQLException e){
-            throw new DatabaseException("Database connection failed. ", e);
+            throw new DatabaseException("Database connection failed. " + e.getMessage(), e);
         }
     }
     private void connectToDB() throws ClassNotFoundException, SQLException {
@@ -162,6 +162,8 @@ public class SoundgoodDao {
     // sem 4.3 script goes here
 
     terminateLeaseStmt = connection.prepareStatement(
+        "SELECT * FROM " + INSTRUMENT_TABLE + " FOR UPDATE;" + 
+        "SELECT * FROM "+ LEASE_TABLE+ " FOR UPDATE;" + 
         "UPDATE " + INSTRUMENT_TABLE + " SET " + INS_LEASE_COLUMN + " = null WHERE " + INS_LEASE_COLUMN+" = ?;" +
         "UPDATE " + LEASE_TABLE + " SET " + LES_STUDENTID_COLUMN + " = null, terminated = true, endTime = CURRENT_TIMESTAMP WHERE " + LEASE_TABLE + ".lease_id = ?;");
 }
