@@ -20,6 +20,7 @@ public class SoundgoodDao {
     private PreparedStatement howManyLeasesStmt;
     private PreparedStatement rentableInstrumentStmt;
     private PreparedStatement terminateLeaseStmt;
+    private PreparedStatement getOneLeaseStmt;
     private static final String INS_PRICE_COLUMN = "price";
     private static final String INS_BRAND_COLUMN = "brand";
     private static final String INS_SRL_COLUMN = "serial_number";
@@ -46,6 +47,20 @@ public class SoundgoodDao {
         }
         
     }
+    //ADDED FOR SEM 5, A LOT OTHER WAS CHANGED LOOK 
+    public boolean doesLeaseExist(int lease_id) throws DatabaseException{
+        ResultSet r = null;
+        try{
+            getOneLeaseStmt.setInt(1, lease_id);
+            r = getOneLeaseStmt.executeQuery();
+            r.next();
+            return(!r.getBoolean(5));
+        }
+        catch(SQLException e){
+            handleException("Lease doesn't exist. Please double check the lease_ID.", e);
+        }
+        return false;
+    }
     public void updateTerminateLease(int lease_id) throws DatabaseException{
         try{
             terminateLeaseStmt.setInt(1, lease_id);
@@ -54,7 +69,7 @@ public class SoundgoodDao {
             connection.commit();
         }
         catch(SQLException e){
-            throw new DatabaseException("Database connection failed. " + e.getMessage(), e);
+            handleException("Failed to terminate lease.", e);
         }
     }
     private void connectToDB() throws ClassNotFoundException, SQLException {
@@ -147,12 +162,14 @@ public class SoundgoodDao {
 
     ///////////////////
     // sem 4.3 script goes here
-
+    
     terminateLeaseStmt = connection.prepareStatement(
         "SELECT * FROM " + INSTRUMENT_TABLE + " FOR UPDATE;" + 
         "SELECT * FROM "+ LEASE_TABLE+ " FOR UPDATE;" + 
         "UPDATE " + INSTRUMENT_TABLE + " SET " + INS_LEASE_COLUMN + " = null WHERE " + INS_LEASE_COLUMN+" = ?;" +
         "UPDATE " + LEASE_TABLE + " SET " + LES_STUDENTID_COLUMN + " = null, terminated = true, endTime = CURRENT_TIMESTAMP WHERE " + LEASE_TABLE + ".lease_id = ?;");
+
+    getOneLeaseStmt = connection.prepareStatement("SELECT * FROM " + LEASE_TABLE + " WHERE " + LES_LEASE_ID_COLUMN + "= ?;");
 }
 
 /**Taken with minor edits from github leifll

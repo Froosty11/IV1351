@@ -1,4 +1,5 @@
 package controller;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +33,13 @@ public class Controller {
 
     public void terminateLease(int leaseID){
         try{
-            sgDB.updateTerminateLease(leaseID);
+            if(sgDB.doesLeaseExist(leaseID))
+                sgDB.updateTerminateLease(leaseID);
         }
-        catch(DatabaseException er){
+        catch(DatabaseException er ){
             System.out.println(er.getMessage());
-        }    }
+        }    
+    }
 
     
     public void startNewLease(int studentID, String serial){
