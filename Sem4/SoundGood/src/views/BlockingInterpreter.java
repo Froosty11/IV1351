@@ -5,6 +5,7 @@ package views;
 import java.util.List;
 import java.util.Scanner;
 import controller.Controller;
+import model.InstrumentItem;
 
 /**
  * Reads and interprets user commands. This command interpreter is blocking, the user
@@ -45,8 +46,8 @@ public class BlockingInterpreter {
                 switch (cmdLine.getCmd()) {
                     case INSTRUMENTLIST:
                     //list all instruments
-                    List<String> s = ctrl.ListAllInstruments(cmdLine.getParameter(0));
-                    for (String string : s) {
+                    List<InstrumentItem> s = ctrl.ListAllInstruments(cmdLine.getParameter(0));
+                    for (InstrumentItem string : s) {
                         System.out.println(string);
                     }
                     break;

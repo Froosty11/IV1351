@@ -2,7 +2,9 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import integration.DatabaseException;
+import model.InstrumentItem;
 import integration.SoundgoodDao;
 
 public class Controller {
@@ -14,18 +16,20 @@ public class Controller {
         sgDB = new SoundgoodDao();
         }
     
-    public List<String> ListAllInstruments(String instrumentType){
+    public List<InstrumentItem> ListAllInstruments(String instrumentType){
         if(instrumentType == null){
-            return new ArrayList<String>();
+            return new ArrayList<InstrumentItem>();
         }
         try{
-            return sgDB.findAllAvalInstruments(instrumentType);
+            List<InstrumentItem> returnList = sgDB.findAllAvalInstruments(instrumentType);
+            return returnList;
         }
         catch(DatabaseException er){
             er.printStackTrace();
             return null;
         }
     }
+
     public void terminateLease(int leaseID){
         try{
             sgDB.updateTerminateLease(leaseID);
@@ -33,12 +37,29 @@ public class Controller {
         catch(DatabaseException er){
             System.out.println(er.getMessage());
         }    }
+
+    
     public void startNewLease(int studentID, String serial){
+        String errMsg = "Generic database exception!";
+
         try{
-            sgDB.updateRentInstrument(studentID, serial);
+            errMsg = "Instrument doesn't exist or is already leased.";
+
+            if(sgDB.findIfAnInstrumentLeasable(serial)){
+                errMsg = "Student doesn't exist or has already leased two instruments!";
+                int i = sgDB.findHowManyLeases(studentID);
+                //System.out.println(i);
+                if(i < 2 && i >= 0 ){
+                    sgDB.updateRentInstrument(studentID, serial);
+                }
+                else{
+                    throw new DatabaseException(errMsg);
+                }
+            }
+            
         }
         catch(DatabaseException er){
-            System.out.println(er.getMessage());
+            System.out.println(errMsg);
         }
     }
 

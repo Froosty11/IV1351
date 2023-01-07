@@ -3,6 +3,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.InstrumentItem;
+
 
 public class SoundgoodDao {
 
@@ -71,59 +73,44 @@ public class SoundgoodDao {
 
         }
         catch(SQLException e){
-            throw new DatabaseException("Database connection failed. ", e);
+            throw new DatabaseException("Database connection failed. " + e.getMessage(), e);
         }
     }
-    public boolean findIfAnInstrumentLeasable(String serial) throws SQLException{
+    public boolean findIfAnInstrumentLeasable(String serial) throws DatabaseException{
+        try{
         ResultSet r = null;
         rentableInstrumentStmt.setString(1, serial);
         r = rentableInstrumentStmt.executeQuery();
         if(r.next()) return true;
         return false;
+        }
+        catch(SQLException err){
+            throw new DatabaseException("Database connection failed. " + err.getMessage(), err);
+        }
     }
     void print( int s){
         System.out.println(s);
     }
     public void updateRentInstrument(int studentID, String serialNumber) throws DatabaseException{
         try{
-            if(findIfAnInstrumentLeasable(serialNumber)){
-            int i = findHowManyLeases(studentID);
-            if(i < 2 && i >= 0){
                 rentAnInstrumentStmt.setInt(1, studentID);
                 rentAnInstrumentStmt.setInt(2, studentID);
                 rentAnInstrumentStmt.setString(3, serialNumber);
                 rentAnInstrumentStmt.execute();
                 connection.commit();
             }
-            else if(i == -1){
-                throw new DatabaseException("Something went very wrong... Database connection failed. ");
-            } 
-            else{
-
-                throw new DatabaseException("This student already has a maximum amount of leases. ");
-            }
-        }
-        else throw new DatabaseException("Instrument requested is already taken, or doesn't exist. Please choose another.");
-        }
         catch(SQLException e){
             throw new DatabaseException("Database exception. " + e.getMessage());
         }
     }
-    public List<String> findAllAvalInstruments(String instrumentType) throws DatabaseException{
-        List<String> instrumentInfos = new ArrayList<>();
+    public List<InstrumentItem> findAllAvalInstruments(String instrumentType) throws DatabaseException{
+        List<InstrumentItem> instrumentInfos = new ArrayList<>();
         ResultSet queryReturn = null;
         try{
             findInstrumentStmt.setString(1, instrumentType);
             queryReturn = findInstrumentStmt.executeQuery();
             while(queryReturn.next()){
-                StringBuilder str = new StringBuilder();
-                str.append(queryReturn.getString(1));
-                str.append(" - ");
-                str.append(queryReturn.getString(2));
-                str.append(" - ");
-                str.append(queryReturn.getString(3));
-                str.append("kr");
-                instrumentInfos.add(new String(str));
+                instrumentInfos.add(new InstrumentItem(queryReturn.getString(1), Integer.parseInt(queryReturn.getString(3)), queryReturn.getString(2)));
             }
             connection.commit();
         }
@@ -153,7 +140,7 @@ public class SoundgoodDao {
     " FROM " + LEASE_TABLE +
     " WHERE " + LEASE_TABLE + "." + LES_STUDENTID_COLUMN + "= ? AND " +  INS_SRL_COLUMN + "= ? AND " + INSTRUMENT_TABLE+"." +INS_LEASE_COLUMN + " is null");
 
-    howManyLeasesStmt = connection.prepareStatement("select count(CASE WHEN ? = " + LEASE_TABLE + "." + LES_STUDENTID_COLUMN + " THEN 1 END) from " + LEASE_TABLE);
+    howManyLeasesStmt = connection.prepareStatement("select count(CASE WHEN ? = " + LEASE_TABLE + "." + LES_STUDENTID_COLUMN + " THEN 1 END) from " + LEASE_TABLE + ";");
 
     rentableInstrumentStmt = connection.prepareStatement("SELECT * FROM intstrumentItem WHERE serial_number = ? AND lease_id is null");
     
