@@ -153,11 +153,11 @@ public class SoundgoodDao {
     " UPDATE " + INSTRUMENT_TABLE +
     " SET " + INS_LEASE_COLUMN+ " = " + LEASE_TABLE + "." + LES_LEASE_ID_COLUMN + 
     " FROM " + LEASE_TABLE +
-    " WHERE " + LEASE_TABLE + "." + LES_STUDENTID_COLUMN + "= ? AND " +  INS_SRL_COLUMN + "= ? AND " + INSTRUMENT_TABLE+"." +INS_LEASE_COLUMN + " is null");
+    " WHERE " + LEASE_TABLE + "." + LES_STUDENTID_COLUMN + "= ? AND " +  INS_SRL_COLUMN + "= ? AND " + INSTRUMENT_TABLE+"." +INS_LEASE_COLUMN + " is null;");
 
-    howManyLeasesStmt = connection.prepareStatement("select count(CASE WHEN ? = " + LEASE_TABLE + "." + LES_STUDENTID_COLUMN + " THEN 1 END) from " + LEASE_TABLE + ";");
+    howManyLeasesStmt = connection.prepareStatement("SELECT * FROM lease FOR UPDATE; select count(CASE WHEN ? = " + LEASE_TABLE + "." + LES_STUDENTID_COLUMN + " THEN 1 END) from " + LEASE_TABLE + ";");
 
-    rentableInstrumentStmt = connection.prepareStatement("SELECT * FROM intstrumentItem WHERE serial_number = ? AND lease_id is null");
+    rentableInstrumentStmt = connection.prepareStatement("SELECT * FROM intstrumentItem WHERE serial_number = ? AND lease_id is null;");
     
 
     ///////////////////
